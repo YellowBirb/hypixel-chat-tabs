@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import yellowbirb.hypixelchattabs.HypixelChatTabsClient;
 import yellowbirb.hypixelchattabs.HypixelChatTabsClient.Tab;
 
@@ -45,5 +46,10 @@ public abstract class ChatScreenMixin extends Screen {
 
             addDrawableChild(tabButton);
         }
+    }
+
+    @Inject(at = @At("HEAD"), method = "keyPressed")
+    private void onKeyPressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> cir) {
+        setFocused(chatField);
     }
 }
