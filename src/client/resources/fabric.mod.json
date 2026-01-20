@@ -1,0 +1,35 @@
+{
+	"schemaVersion": 1,
+	"id": "hypixel-chat-tabs",
+	"version": "${version}",
+	"name": "Hypixel Chat Tabs",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		{"name": "YellowBirb", "contact": {
+			"discord": "yellowbirb"
+		}}
+	],
+	"contact": {
+		"sources": "https://github.com/YellowBirb/repositorycomingsoon"
+	},
+	"license": "CC-BY-NC-SA-4.0",
+	"icon": "icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"yellowbirb.hypixelchattabs.HypixelChatTabsClient"
+		]
+	},
+	"mixins": [
+		{
+			"config": "hypixel-chat-tabs.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.21.8",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
