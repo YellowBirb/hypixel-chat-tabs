@@ -34,11 +34,6 @@ public class HypixelChatTabsClient implements ClientModInitializer {
 	}
 
 	public static boolean filter(Text text) {
-        LOGGER.debug("String: {}", text.getString());
-        LOGGER.debug("Unformatted String: {}", removeFormatting(text.getString()));
-		if (text.getLiteralString() != null) {
-            LOGGER.debug("Literal: {}", text.getLiteralString());
-		}
 
 		String message = removeFormatting(text.getString());
 
