@@ -43,7 +43,7 @@ public abstract class ChatScreenMixin extends Screen {
                 HypixelChatTabsClient.tab = chatTab;
                 hud.reset();
                 client.send(() -> setFocused(chatField));
-            }).dimensions(5 + chatTab.ordinal() * 22, this.height - hud.getHeight() - 40 - 20 - 5, 20, 20).build();
+            }).dimensions(5 + chatTab.ordinal() * 22, this.height - hud.getHeight(MinecraftClient.getInstance().options.getChatHeightFocused().getValue()) - 40 - 20 - 5, 20, 20).build();
 
             addDrawableChild(tabButton);
         }
