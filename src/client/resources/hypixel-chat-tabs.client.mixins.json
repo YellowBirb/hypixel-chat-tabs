@@ -3,6 +3,7 @@
 	"package": "yellowbirb.hypixelchattabs.mixin.client",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
+		"ChatHudAccessor",
 		"ChatHudMixin",
 		"ChatScreenMixin"
 	],
