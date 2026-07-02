@@ -1,13 +1,13 @@
 package yellowbirb.hypixelchattabs.mixin.client;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.hud.ChatHud;
-import net.minecraft.client.gui.screen.ChatScreen;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.input.KeyInput;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.ChatComponent;
+import net.minecraft.client.gui.screens.ChatScreen;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,16 +20,16 @@ import yellowbirb.hypixelchattabs.HypixelChatTabsClient.Tab;
 @Mixin(ChatScreen.class)
 public abstract class ChatScreenMixin extends Screen {
 
-    @Shadow protected TextFieldWidget chatField;
+    @Shadow protected EditBox input;
 
-    protected ChatScreenMixin(Text title) {
+    protected ChatScreenMixin(Component title) {
         super(title);
     }
 
     @Inject(at = @At("TAIL"), method = "init")
     private void onInit(CallbackInfo ci) {
-        MinecraftClient client = MinecraftClient.getInstance();
-        ChatHud hud = client.inGameHud.getChatHud();
+        Minecraft client = Minecraft.getInstance();
+        ChatComponent hud = client.gui.getChat();
         for (Tab chatTab : Tab.values()) {
             String message = "X";
             switch (chatTab) {
@@ -39,18 +39,18 @@ public abstract class ChatScreenMixin extends Screen {
                 case PRIVATE -> message = "PM";
                 case COOP -> message = "CC";
             }
-            ButtonWidget tabButton = ButtonWidget.builder(Text.literal(message), (btn) -> {
+            Button tabButton = Button.builder(Component.literal(message), (btn) -> {
                 HypixelChatTabsClient.tab = chatTab;
-                hud.reset();
-                client.send(() -> setFocused(chatField));
-            }).dimensions(5 + chatTab.ordinal() * 22, this.height - hud.getHeight(MinecraftClient.getInstance().options.getChatHeightFocused().getValue()) - 40 - 20 - 5, 20, 20).build();
+                hud.rescaleChat();
+                client.schedule(() -> setFocused(input));
+            }).bounds(5 + chatTab.ordinal() * 22, this.height - ChatComponent.getHeight(Minecraft.getInstance().options.chatHeightFocused().get()) - 40 - 20 - 5, 20, 20).build();
 
-            addDrawableChild(tabButton);
+            addRenderableWidget(tabButton);
         }
     }
 
     @Inject(at = @At("HEAD"), method = "keyPressed")
-    private void onKeyPressed(KeyInput input, CallbackInfoReturnable<Boolean> cir) {
-        setFocused(chatField);
+    private void onKeyPressed(KeyEvent input, CallbackInfoReturnable<Boolean> cir) {
+        setFocused(this.input);
     }
 }

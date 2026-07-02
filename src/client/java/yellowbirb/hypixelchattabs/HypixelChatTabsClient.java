@@ -1,7 +1,7 @@
 package yellowbirb.hypixelchattabs;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +33,7 @@ public class HypixelChatTabsClient implements ClientModInitializer {
 		return stringBuilder.toString();
 	}
 
-	public static boolean filter(Text text) {
+	public static boolean filter(Component text) {
 
 		String message = removeFormatting(text.getString());
 
