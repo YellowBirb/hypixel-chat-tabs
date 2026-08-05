@@ -18,20 +18,9 @@ public class HypixelChatTabsClient implements ClientModInitializer {
 	}
 
 	private static String removeFormatting(String string) {
-		StringBuilder stringBuilder = new StringBuilder(string);
-		int deleted = 0;
-		for (int i = 0; i < string.length(); i++) {
-			while (string.charAt(i) == '§') {
-				stringBuilder.deleteCharAt(i-deleted);
-				deleted++;
-				i++;
-				stringBuilder.deleteCharAt(i-deleted);
-				deleted++;
-				i++;
-			}
-		}
-		return stringBuilder.toString();
+		return string == null ? "" : string.replaceAll("§.?", "");
 	}
+
 
 	public static boolean filter(Component text) {
 
