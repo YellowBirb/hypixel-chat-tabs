@@ -31,26 +31,25 @@ public abstract class ChatScreenMixin extends Screen {
         Minecraft client = Minecraft.getInstance();
         ChatComponent hud = client.gui.getChat();
         for (Tab chatTab : Tab.values()) {
-            String message = "X";
-            switch (chatTab) {
-                case ALL -> message = "A";
-                case PARTY -> message = "P";
-                case GUILD -> message = "G";
-                case PRIVATE -> message = "PM";
-                case COOP -> message = "CC";
-            }
-            Button tabButton = Button.builder(Component.literal(message), (btn) -> {
+            String message = switch (chatTab) {
+                case ALL -> "A";
+                case PARTY -> "P";
+                case GUILD -> "G";
+                case PRIVATE -> "PM";
+                case COOP -> "CC";
+            };
+            Button tabButton = Button.builder(Component.literal(message), (_) -> {
                 HypixelChatTabsClient.tab = chatTab;
                 hud.rescaleChat();
                 client.schedule(() -> setFocused(input));
-            }).bounds(5 + chatTab.ordinal() * 22, this.height - ChatComponent.getHeight(Minecraft.getInstance().options.chatHeightFocused().get()) - 40 - 20 - 5, 20, 20).build();
+            }).bounds(5 + chatTab.ordinal() * 22, this.height - ChatComponent.getHeight(minecraft.options.chatHeightFocused().get()) - 40 - 20 - 5, 20, 20).build();
 
             addRenderableWidget(tabButton);
         }
     }
 
     @Inject(at = @At("HEAD"), method = "keyPressed")
-    private void onKeyPressed(KeyEvent input, CallbackInfoReturnable<Boolean> cir) {
+    private void onKeyPressed(KeyEvent event, CallbackInfoReturnable<Boolean> cir) {
         setFocused(this.input);
     }
 }
