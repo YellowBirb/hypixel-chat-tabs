@@ -29,7 +29,7 @@ public abstract class ChatScreenMixin extends Screen {
     @Inject(at = @At("TAIL"), method = "init")
     private void onInit(CallbackInfo ci) {
         Minecraft client = Minecraft.getInstance();
-        ChatComponent hud = client.gui.getChat();
+        ChatComponent hud = client.gui.hud.getChat();
         for (Tab chatTab : Tab.values()) {
             String message = switch (chatTab) {
                 case ALL -> "A";

@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "hypixel-chat-tabs",
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"name": "Hypixel Chat Tabs",
 	"description": "Chat Tabs for Hypixel",
 	"authors": [
@@ -27,9 +27,9 @@
 		}
 	],
 	"depends": {
-		"fabricloader": ">=0.19.2",
-		"minecraft": ">=26.1.2",
-		"java": ">=21",
+		"fabricloader": ">=0.19.5",
+		"minecraft": ">=26.2",
+		"java": ">=25",
 		"fabric-api": "*"
 	}
 }
